@@ -304,7 +304,7 @@ services:
     container_name: airbyte-connector-builder-server
     restart: unless-stopped
     ports:
-      - 8080
+      - 8090
     environment:
       - AIRBYTE_VERSION=${VERSION}
       - CDK_VERSION=${CDK_VERSION}

@@ -1,0 +1,48 @@
+version: "13"
+x-logging: &default-logging
+  options:
+    max-size: "100m"
+    max-file: "5"
+  driver: json-file
+services:
+  postgres:
+    hostname: postgredb
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+      - /mnt/d/Tu/Personal_project/DE-learning-project/airbyte/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
+    networks:
+      - production_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "5050:5050"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: tu.mai@jrgvn.com
+      PGADMIN_DEFAULT_PASSWORD: today@1010
+      PGADMIN_LISTEN_PORT: 5050
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - production_network
+
+volumes:
+  postgres-db-volume:
+  pgadmin-data:
+
+networks:
+  production_network:
+    external: true

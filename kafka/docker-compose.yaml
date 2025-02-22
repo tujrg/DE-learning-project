@@ -1,8 +1,5 @@
 version: "3"
-volumes:
-  shared-workspace:
-    name: "hadoop-distributed-file-system"
-    driver: local
+
 services:
   broker:
     image: confluentinc/cp-kafka:7.4.0
@@ -52,22 +49,22 @@ services:
   #     SCHEMA_REGISTRY_HOST_NAME: "localhost"
   #     SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081" #(default: http://0.0.0.0:8081)
 
-  # control-center:
-  #   image: confluentinc/cp-enterprise-control-center:7.2.0
-  #   hostname: control-center
-  #   container_name: control-center
-  #   depends_on:
-  #     - zookeeper
-  #     - broker
-  #     - schema-registry
-  #   ports:
-  #     - "9021:9021"
-  #   environment:
-  #     CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
-  #     CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-  #     CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://localhost:8081"
-  #     CONTROL_CENTER_REPLICATION_FACTOR: 1
-  #     CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
-  #     CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
-  #     CONFLUENT_METRICS_TOPIC_REPLICATION: 1
-  #     PORT: 9021
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:7.2.0
+    hostname: control-center
+    container_name: control-center
+    depends_on:
+      - zookeeper
+      - broker
+      # - schema-registry
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://localhost:8081"
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+      CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+      PORT: 9021
