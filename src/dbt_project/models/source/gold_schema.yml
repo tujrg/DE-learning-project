@@ -1,0 +1,106 @@
+version: 2
+
+sources:
+  - name: goldlayer
+    database: phv-customer-data-platform
+    schema: EDA  
+    loader: gcloud storage
+    # For source table that are External Table type, move table description to meta node.
+    tables:
+      - name: end_of_day
+        meta:
+          projectid: sql-server-replicate
+          schema: EDA
+          location: 'gs://coding-pyspark-workspace-global/tu_mai/SilverLayer/EndOfDay/'
+          format: DELTA_LAKE
+          description: "This table contains data market end of day"
+          columns:
+            - name: open
+              data_type: FLOAT64
+              description: open price
+              tests:
+                - not_null
+            - name: high
+              data_type: FLOAT64
+              description: highest price
+              tests:
+                - not_null
+            - name: low
+              data_type: FLOAT64
+              description: lowest price
+              tests:
+                - not_null
+            - name: close
+              data_type: FLOAT64
+              description: price when closing market
+              tests:
+                - not_null
+            - name: volume
+              data_type: INT64
+              description: volume
+              tests:
+                - not_null
+            - name: adj_high
+              data_type: FLOAT64
+              description: adj_high
+              tests:
+                - not_null
+            - name: adj_low
+              data_type: FLOAT64
+              description: adj_low
+              tests:
+                - not_null
+            - name: adj_close
+              data_type: FLOAT64
+              description: adj_close
+              tests:
+                - not_null
+            - name: adj_open
+              data_type: FLOAT64
+              description: adj_open
+              tests:
+                - not_null
+            - name: split_factor
+              data_type: INT64
+              description: split_factor
+            - name: dividend
+              data_type: FLOAT64
+              description: dividend
+            - name: name
+              data_type: STRING
+              description: name
+            - name: exchange_code
+              data_type: STRING
+              description: exchange_code
+            - name: asset_type
+              data_type: STRING
+              description: asset_type
+            - name: price_currency
+              data_type: STRING
+              description: price_currency
+              tests:
+                - not_null
+            - name: symbol
+              data_type: STRING
+              description: symbol
+              tests:
+                - not_null
+            - name: exchange
+              data_type: STRING
+              description: exchange
+              tests:
+                - not_null
+            - name: date
+              data_type: TIMESTAMP
+              description: date
+              tests:
+                - not_null
+            
+
+      # - name: fact_user
+      #   meta:
+      #     projectid: phv-customer-data-platform
+      #     schema: CDP_Result
+      #     location: 'gs://jrg-vn-prod/gold/fact/fact_user'
+      #     format: DELTA_LAKE
+      #     description: "This table contains user information for CDP project"

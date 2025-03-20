@@ -1,0 +1,13 @@
+dbt_project:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: phv-customer-data-platform
+      dataset: EDA
+      threads: 3
+      timeout_seconds: 300
+      location: US
+ 
+    

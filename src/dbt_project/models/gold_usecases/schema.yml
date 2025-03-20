@@ -1,0 +1,27 @@
+
+version: 2
+
+models:
+  - name: top_increase_tickers
+    description: "Top 10 tickers are increased compare with last month"
+    columns:
+      - name: symbol
+        data_type: STRING
+        description: "Symbol"
+        data_tests:
+          - not_null
+      - name: close_price
+        data_type: FLOAT64
+        description: "Closed price of current day"
+        data_tests:
+          - not_null
+      - name: prev_price
+        data_type: FLOAT64
+        description: "Closed price of yesterday"
+        data_tests:
+          - not_null
+      - name: date
+        data_type: TIMESTAMP
+        description: "Date of closed price"
+        data_tests:
+          - not_null
